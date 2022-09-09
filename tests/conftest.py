@@ -1,6 +1,6 @@
 import pytest
 
-from boilerplate.examples.classes import Person
+from pm_stats.examples.classes import Person
 
 
 @pytest.fixture(scope="function")
