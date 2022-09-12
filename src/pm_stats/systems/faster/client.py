@@ -11,8 +11,7 @@ from sqlalchemy.engine import URL, Row
 from dynaconf import Dynaconf
 
 from pm_stats.config import settings
-
-# from pm_stats.systems.faster.models import WorkOrder
+from pm_stats.systems.faster.models import PARAMS, QUERY
 
 Records = List[dict]
 
@@ -52,39 +51,14 @@ class Faster:
         """xyz"""
         return [row._asdict() for row in cursor.all()]
 
-    # def get_work_orders(self, limit: int = 100) -> DataBaseRows:
-    #     """xyz"""
-    #     # create aliases for the tables
-    #     cit = aliased(Citation, name="cit")
-
-    #     # extract the columns to include in the query
-    #     cit_cols = [getattr(cit, col) for col in cit.columns]
-
-    #     # build the query
-    #     query = select(*cit_cols).limit(limit)
-    #     with Session(self.engine) as session:
-    #         rows = session.execute(query).fetchall()
-    #     return DataBaseRows(rows)
+    def get_work_orders(self, query: str, limit: int = 100) -> pd.DataFrame:
+        """xyz"""
+        print("Getting work orders")
+        params = PARAMS["caprice"]
+        df = pd.read_sql_query(db.text(query), self.engine, params=params)
+        return df
 
 
-class DataBaseRows:
-    """A class that provides simplified access to the results of a SQL query"""
-
-    def __init__(self, rows: List[Row], row_type: str = "columns") -> None:
-        """Inits the DataBaseRows class"""
-        self.rows = rows
-        self.row_type = row_type
-        self.cols = rows[0]._fields
-
-    @property
-    def dataframe(self) -> pd.DataFrame:
-        """Returns the rows as a Pandas dataframe"""
-        return pd.DataFrame(self.rows, columns=self.cols)
-
-    @property
-    def records(self) -> List[dict]:
-        """Returns the rows as a list of dictionaries"""
-        return [row._asdict() for row in self.rows]
-
-
-f = Faster()
+if __name__ == "__main__":
+    f = Faster()
+    work_orders = f.get_work_orders(query=QUERY)
