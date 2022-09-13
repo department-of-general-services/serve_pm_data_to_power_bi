@@ -1,3 +1,4 @@
+# pylint: disable=C0103
 from typing import List
 import pandas as pd
 import statsmodels.api as sm
@@ -15,15 +16,16 @@ class MultipleRegression:
         self.data = data
         self.X = data[x_cols]
         self.y = data[y_col]
-        self.model = self.model()
+        self.model = self.fit_model()
 
     @property
     def number_of_predictors(self) -> int:
         """Returns the number of predictor columns"""
         return len(self.X.columns)
 
-    def model(self) -> str:
+    def fit_model(self) -> str:
         """X"""
         self.X = sm.add_constant(self.X)
         estimate = sm.OLS(self.y, self.X).fit()
         print(estimate.summary())
+        return estimate
