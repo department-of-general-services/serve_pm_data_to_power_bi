@@ -1,13 +1,11 @@
-# pylint: disable E1101
+# pylint: disable=E1101, C0103
 from __future__ import annotations
 from typing import List
 
 import pandas as pd
 import sqlalchemy as db
 import pyodbc
-from sqlalchemy import select
-from sqlalchemy.orm import Session, aliased
-from sqlalchemy.engine import URL, Row
+from sqlalchemy.engine import URL
 from dynaconf import Dynaconf
 
 from pm_stats.config import settings
@@ -20,7 +18,10 @@ class Faster:
     """Handles connection and read/write functions for Faster database."""
 
     def __init__(
-        self, config: Dynaconf = settings, conn_url: str = None
+        self,
+        config: Dynaconf = settings,
+        conn_url: str = None,
+        vehicle_model: str = "caprice",
     ) -> None:
         """Creates engine object."""
         if not conn_url:
@@ -35,7 +36,8 @@ class Faster:
                 "mssql+pyodbc", query={"odbc_connect": conn_str}
             )
         self.engine = db.create_engine(conn_url, pool_pre_ping=True)
-        self._work_orders: Records = None
+        self.vehicle_model = vehicle_model
+        self._work_orders: pd.DataFrame = None
 
     @property
     def work_orders(self):
@@ -45,16 +47,12 @@ class Faster:
                 "The list of work orders hasn't been queried yet. "
                 "Use Faster.get_work_orders() to retrieve that list."
             )
-        return self._citations
+        return self._work_orders
 
-    def _rows_to_dicts(self, cursor):
-        """xyz"""
-        return [row._asdict() for row in cursor.all()]
-
-    def get_work_orders(self, query: str, limit: int = 100) -> pd.DataFrame:
+    def get_work_orders(self, query: str) -> pd.DataFrame:
         """xyz"""
         print("Getting work orders")
-        params = PARAMS["caprice"]
+        params = PARAMS[self.vehicle_model]
         df = pd.read_sql_query(db.text(query), self.engine, params=params)
         return df
 

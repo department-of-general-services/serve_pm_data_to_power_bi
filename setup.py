@@ -1,6 +1,4 @@
 """Setup script for pm_stats package."""
-import os
-
 from setuptools import find_packages
 from setuptools import setup
 

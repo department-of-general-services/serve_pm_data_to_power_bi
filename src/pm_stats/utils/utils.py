@@ -79,7 +79,7 @@ def cast_types(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def prepare_data(df: pd.DataFrame, mapping: dict) -> pd.DataFrame:
-    """Runs all data-preparation functions in sequence to 
+    """Runs all data-preparation functions in sequence to
     complete workflow.
 
     Args:

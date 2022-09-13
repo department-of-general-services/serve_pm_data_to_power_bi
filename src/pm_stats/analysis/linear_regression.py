@@ -24,7 +24,7 @@ class MultipleRegression:
         return len(self.X.columns)
 
     def fit_model(self) -> str:
-        """X"""
+        """Fits a multiple linear regression model to the data."""
         self.X = sm.add_constant(self.X)
         estimate = sm.OLS(self.y, self.X).fit()
         print(estimate.summary())
