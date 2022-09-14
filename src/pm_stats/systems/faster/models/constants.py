@@ -4,13 +4,13 @@
 QUERY = """
     SET NOCOUNT ON;
     SET ARITHABORT ON;
-    EXEC [Baltimore].[ZZ_Martix_CostPMLate] 
-    @StartDate = :start_date, 
-    @EndDate = :end_date, 
-    @TimeZone = :time_zone, 
-    @Length = :length, 
-    @Modelid = :model_id, 
-    @Usage = :usage; 
+    EXEC [Baltimore].[ZZ_Martix_CostPMLate]
+    @StartDate = :start_date,
+    @EndDate = :end_date,
+    @TimeZone = :time_zone,
+    @Length = :length,
+    @Modelid = :model_id,
+    @Usage = :usage;
     """
 
 PARAMS = {

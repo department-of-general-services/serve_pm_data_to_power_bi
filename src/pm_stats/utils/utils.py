@@ -9,7 +9,7 @@ from pm_stats.systems.faster import (
 )
 
 
-def rename(df: pd.DataFrame, mapping: dict) -> pd.DataFrame:
+def rename_cols(df: pd.DataFrame, mapping: dict) -> pd.DataFrame:
     """Renames the columns of the dataframe according to a
     dictionary with mapping.
 
@@ -35,7 +35,7 @@ def cast_init_types(df: pd.DataFrame) -> pd.DataFrame:
         pd.DataFrame: Output dataframe
     """
     df = df.copy()
-    df[OBJECT_COLS] = df[OBJECT_COLS].astype(str)
+    df[OBJECT_COLS] = df[OBJECT_COLS].fillna("").astype(str)
     df[INT_COLS] = df[INT_COLS].astype("Int64")
     df[FLOAT_COLS] = df[FLOAT_COLS].astype(float)
     df[DATE_COLS] = df[DATE_COLS].astype("datetime64[ns]")
@@ -53,10 +53,10 @@ def replace_values(df: pd.DataFrame) -> pd.DataFrame:
         pd.DataFrame: Output dataframe
     """
     df = df.copy()
-    mapper = {"Y": 1, "N": 0}
-    df[["is_off_schedule", "is_on_schedule"]] = df[
-        ["is_off_schedule", "is_on_schedule"]
-    ].replace(mapper)
+    mapper = {"Y": 1, "N": 0, "": 0}
+    df[["road_call", "accident"]] = df[["road_call", "accident"]].replace(
+        mapper
+    )
     return df
 
 
@@ -90,7 +90,7 @@ def prepare_data(df: pd.DataFrame, mapping: dict) -> pd.DataFrame:
         pd.DataFrame: _description_
     """
     df = df.copy()
-    df = rename(df, mapping=mapping)
+    df = rename_cols(df, mapping=mapping)
     df = cast_init_types(df)
     df = replace_values(df)
     df = cast_types(df)
