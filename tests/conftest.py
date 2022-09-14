@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from pm_stats.systems.faster import Faster
+from src.pm_stats.systems.faster import Faster
 from tests.testing_utils.work_orders_data import raw_work_order_table
 
 
