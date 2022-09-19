@@ -1,14 +1,16 @@
+import pandas as pd
 import pytest
 
-from boilerplate.examples.classes import Person
+from pm_stats.systems.faster import Faster, raw_wo_table
 
 
-@pytest.fixture(scope="function")
-def alice():
-    """Returns a sample instance of the Person which gets recreated
-    for every pytest function. This instance has the following attributes:
-        first_name: Alice
-        last_name: Doe
-        age: 35
+@pytest.fixture(scope="function", name="test_faster")
+def raw_work_orders() -> pd.DataFrame:
+    """Creates a mockup of the raw work orders dataset with only two rows for testing.
+
+    Returns:
+        pd.DataFrame: Mocked up dataset
     """
-    return Person("Alice", "Doe", 35)
+    data = pd.DataFrame.from_dict(raw_wo_table, orient="index")
+    test_faster = Faster(testing_data=data)
+    return test_faster

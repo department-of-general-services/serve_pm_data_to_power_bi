@@ -1,0 +1,3 @@
+[DEFAULT]
+faster_server = "server_name"
+faster_database = "database_name"

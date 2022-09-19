@@ -1,16 +1,14 @@
-"""Setup script for boilerplate package."""
-import os
-
+"""Setup script for pm_stats package."""
 from setuptools import find_packages
 from setuptools import setup
 
 
 setup(
-    name="boilerplate",  # update this to reflect your project name
+    name="pm_stats",  # update this to reflect your project name
     version="1.0.0",
-    description="Boilerplate code for basic python package",
-    author="Billy Daly",  # change this to your name or org
-    author_email="williamdaly422@gmail.com",  # change this to your email
+    description="Code for pm_stats package",
+    author="James Trimarco",  # change this to your name or org
+    author_email="james.trimarco@gmail.com",  # change this to your email
     install_requires=[],
     include_package_data=True,
     package_dir={"": "src"},  # this is required to access code in src/

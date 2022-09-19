@@ -1,3 +1,14 @@
+# just an experiment
+[build-system]
+requires = [
+    "setuptools >= 35.0.2",
+    "setuptools_scm >= 2.0.0, <3"
+]
+build-backend = "setuptools.build_meta"
+
+[metadata]
+name = "pm-stats"
+
 # configures some basic black settings per this article:
 # https://ljvmiranda921.github.io/notebook/2018/06/21/precommits-using-black-and-flake8/
 [tool.black]
@@ -54,6 +65,11 @@ unauthorized_licenses = []
 [tool.pylint."MESSAGE CONTROL"]
 disable = [
   "C0114",  # Disables module docstrings
-  "R0201",  # Disables method could have been a function
   "R0903"  # Disables too few public methods
+]
+
+# gives full control over import process without using sys
+[tool.pytest.ini_options]
+addopts = [
+  "--import-mode=importlib",
 ]

@@ -1,4 +1,4 @@
-# Python Boilerplate
+# Python pm_stats
 
 <details open="open">
 <summary>Table of Contents</summary>
@@ -27,7 +27,7 @@
 
 <!-- TODO: Replace with a brief description of your own project -->
 
-Python Boilerplate provides a common file structure for a Python project and encourages best practices in python development, including some simple code quality checks set up and some idiomatic examples of python data strctures and functions. This project is a template that can be used as a foundation for future projects.
+Python pm_stats provides a common file structure for a Python project and encourages best practices in python development, including some simple code quality checks set up and some idiomatic examples of python data strctures and functions. This project is a template that can be used as a foundation for future projects.
 
 ### Made With
 
@@ -66,8 +66,8 @@ If you receive an error message, or the version of python you have installed is 
 
 ### Installation
 
-1. [Clone the repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository-from-github/cloning-a-repository) on your local machine: `git clone https://github.com/widal001/python-boilerplate.git`
-1. Change directory into the cloned project: `cd python-boilerplate`
+1. [Clone the repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository-from-github/cloning-a-repository) on your local machine: `git clone https://github.com/widal001/python-pm_stats.git`
+1. Change directory into the cloned project: `cd python-pm_stats`
 1. Create a new virtual environment: `python -m venv env`
 1. Activate the virtual environment
    - On Mac/Linux: `source env/bin/activate`
@@ -91,13 +91,13 @@ If you receive an error message, or the version of python you have installed is 
 
 <!-- TODO: Remove this section after following the steps below -->
 
-When using this boilerplate code as a template for your own project, follow the steps below:
+When using this pm_stats code as a template for your own project, follow the steps below:
 
 1. Complete all of the `TODO` items listed as comments in this README
-1. Pick a new name for your package, then replace the word `boilerplate` with that new name in the following places:
+1. Pick a new name for your package, then replace the word `pm_stats` with that new name in the following places:
    - `setup.py`
    - `tox.ini`
-   - `src/boilerplate/` and all files within that directory
+   - `src/pm_stats/` and all files within that directory
    - `tests/` and all of the files within that directory
 1. All new python code should be added either as a single module or collection of modules under the `src/{your_package_name}/` directory. For reference:
    ```
@@ -176,10 +176,10 @@ The vision for this template is to simplify the process of creating open source 
 
 For a more detailed breakdown of the feature roadmap and other development priorities please reference the following links:
 
-- [Feature Roadmap](https://github.com/widal001/python-boilerplate/projects/1)
-- [Architecture Decisions](https://github.com/widal001/python-boilerplate/projects/2)
-- [Bug Fixes](https://github.com/widal001/python-boilerplate/projects/3)
-- [All Issues](https://github.com/widal001/python-boilerplate/issues)
+- [Feature Roadmap](https://github.com/widal001/python-pm_stats/projects/1)
+- [Architecture Decisions](https://github.com/widal001/python-pm_stats/projects/2)
+- [Bug Fixes](https://github.com/widal001/python-pm_stats/projects/3)
+- [All Issues](https://github.com/widal001/python-pm_stats/issues)
 
 ## Contributing
 
