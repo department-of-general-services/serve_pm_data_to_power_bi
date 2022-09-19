@@ -1,7 +1,7 @@
 from datetime import datetime
 import numpy as np
 
-raw_work_order_table = {
+raw_wo_table = {
     "wo_1": {
         "AssetNumber": "012",
         "Organization": "Active",

@@ -21,10 +21,8 @@ from pm_stats.systems.faster import (
     BOOL_COLS,
     FLOAT_COLS,
     DATE_COLS,
-)
-from tests.testing_utils.work_orders_data import (
     intermediate_wo_table,
-    raw_work_order_table,
+    raw_wo_table,
     prepared_wo_table,
 )
 
@@ -41,7 +39,7 @@ class TestRenameCols:
         expected form."""
         # setup
         expected = pd.DataFrame.from_dict(prepared_wo_table, orient="index")
-        raw_data = pd.DataFrame.from_dict(raw_work_order_table, orient="index")
+        raw_data = pd.DataFrame.from_dict(raw_wo_table, orient="index")
         # execution
         renamed = rename_cols(raw_data, COLUMN_MAPPING)
         # validation
@@ -59,7 +57,7 @@ class TestCastInitTypes:
         """Tests that the cast_init_types function results in the
         expected data types."""
         # setup
-        raw_data = pd.DataFrame.from_dict(raw_work_order_table, orient="index")
+        raw_data = pd.DataFrame.from_dict(raw_wo_table, orient="index")
         renamed = rename_cols(raw_data, COLUMN_MAPPING)
         print(renamed.columns)
         # execution
@@ -101,7 +99,7 @@ class TestReplaceValues:
         expected = pd.DataFrame.from_dict(
             intermediate_wo_table, orient="index"
         )
-        raw_data = pd.DataFrame.from_dict(raw_work_order_table, orient="index")
+        raw_data = pd.DataFrame.from_dict(raw_wo_table, orient="index")
         renamed = rename_cols(raw_data, COLUMN_MAPPING)
         type_cast = cast_init_types(renamed)
         # execution

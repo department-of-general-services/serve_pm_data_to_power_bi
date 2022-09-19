@@ -1,8 +1,7 @@
 import pandas as pd
 import pytest
 
-from pm_stats.systems.faster import Faster
-from tests.testing_utils.work_orders_data import raw_work_order_table
+from pm_stats.systems.faster import Faster, raw_wo_table
 
 
 @pytest.fixture(scope="function", name="test_faster")
@@ -12,6 +11,6 @@ def raw_work_orders() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Mocked up dataset
     """
-    data = pd.DataFrame.from_dict(raw_work_order_table, orient="index")
+    data = pd.DataFrame.from_dict(raw_wo_table, orient="index")
     test_faster = Faster(testing_data=data)
     return test_faster
