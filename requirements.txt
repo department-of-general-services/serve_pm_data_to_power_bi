@@ -1,6 +1,7 @@
 pre-commit~=2.13.0
 black~=22.3.0
 pandas~=1.3.5
+pandas-stubs~=1.4.4
 numpy~=1.23
 statsmodels~=0.13.2
 pyodbc~=4.0.34
@@ -10,7 +11,7 @@ flake8~=3.9.2
 pylint~=2.15
 tox~=3.25.0
 pytest~=6.2.4
-mypy~=0.950
+mypy~=0.971
 safety~=1.10.3
 liccheck~=0.6.0
 pytest-cov~=2.12.1
