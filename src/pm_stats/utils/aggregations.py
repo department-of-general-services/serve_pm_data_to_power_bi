@@ -1,14 +1,5 @@
 import pandas as pd
 
-# set aggregation
-agg_functions = {
-    "current_pm_mileage": ["min"],
-    "days_late": ["mean"],
-    "miles_driven": ["mean"],
-    "pm_due_date": ["nunique"],
-    "work_order_total_cost": ["sum"],
-}
-
 
 def aggregate_wos_to_assets(
     work_orders: pd.DataFrame, agg_mapping: dict
@@ -33,7 +24,7 @@ def aggregate_wos_to_assets(
             "current_pm_mileage",
             "work_order_total_cost",
         ]
-    ].agg(agg_functions)
+    ].agg(agg_mapping)
     # get rid of multilevel index
     assets.columns = assets.columns.map("_".join)
     return assets
