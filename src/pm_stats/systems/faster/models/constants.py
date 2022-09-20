@@ -14,14 +14,22 @@ QUERY = """
     """
 
 PARAMS = {
-    "caprice": {
-        "start_date": "20210701",
+    "caprice_3_month_cycle": {
+        "start_date": "20190701",
         "end_date": "20220901",
         "time_zone": 3,
         "length": 3,
         "model_id": 842,
         "usage": "MP",
-    }
+    },
+    "caprice_1_month_cycle": {
+        "start_date": "20190701",
+        "end_date": "20220901",
+        "time_zone": 3,
+        "length": 1,
+        "model_id": 842,
+        "usage": "MP",
+    },
 }
 
 COLUMN_MAPPING = {

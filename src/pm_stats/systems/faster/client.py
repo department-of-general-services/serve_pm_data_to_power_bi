@@ -19,9 +19,9 @@ class Faster:
 
     def __init__(
         self,
+        asset_profile: str,
         config: Dynaconf = settings,
         conn_url: str = None,
-        vehicle_model: str = "caprice",
         testing_data: pd.DataFrame = None,
     ) -> None:
         """Creates engine object."""
@@ -40,7 +40,7 @@ class Faster:
                     "mssql+pyodbc", query={"odbc_connect": conn_str}
                 )
             self.engine = db.create_engine(conn_url, pool_pre_ping=True)
-            self.vehicle_model = vehicle_model
+            self.vehicle_model = asset_profile
             self.work_orders: pd.DataFrame = None
 
     def return_work_orders(self):
