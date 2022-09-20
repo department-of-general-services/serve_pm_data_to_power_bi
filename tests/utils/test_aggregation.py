@@ -2,7 +2,7 @@ import pandas as pd
 
 from pm_stats.utils import aggregate_wos_to_assets
 from pm_stats.systems.faster import prepared_wo_table
-from pm_stats.utils import AGG_MAPPING
+from pm_stats.utils import AGG_MAPPING, VEHICLE_ATTRIBUTES
 
 
 class TestAggregateWOsToAssets:
@@ -19,6 +19,17 @@ class TestAggregateWOsToAssets:
         expected_length = 2
         work_orders = pd.DataFrame.from_dict(prepared_wo_table, orient="index")
         # execution
-        assets = aggregate_wos_to_assets(work_orders, AGG_MAPPING)
+        assets = aggregate_wos_to_assets(
+            work_orders, AGG_MAPPING, VEHICLE_ATTRIBUTES
+        )
         # validation
         assert len(assets) == expected_length
+
+    def test_aggregation_provides_expected_columns(self):
+        # setup
+        # expected_length = 2
+        # work_orders = pd.DataFrame.from_dict(prepared_wo_table, orient="index")
+        # execution
+        # assets = aggregate_wos_to_assets(work_orders, AGG_MAPPING, VEHICLE_ATTRIBUTES)
+        # validation
+        assert 1

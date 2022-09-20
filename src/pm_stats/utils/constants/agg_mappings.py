@@ -6,3 +6,10 @@ AGG_MAPPING = {
     "pm_due_date": ["nunique"],
     "work_order_total_cost": ["sum"],
 }
+VEHICLE_ATTRIBUTES = [
+    "asset_number",
+    "vehicle_year",
+    "department",
+    "make",
+    "model",
+]
