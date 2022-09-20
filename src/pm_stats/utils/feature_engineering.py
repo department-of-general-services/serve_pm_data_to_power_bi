@@ -20,7 +20,8 @@ def compute_vehicle_age(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def rename_cols_in_assets_table(
-    df: pd.DataFrame, mapping: dict
+    df: pd.DataFrame,
+    # mapping: dict
 ) -> pd.DataFrame:
     """_summary_
 

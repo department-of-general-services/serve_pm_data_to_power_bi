@@ -25,11 +25,11 @@ class TestAggregateWOsToAssets:
         # validation
         assert len(assets) == expected_length
 
-    def test_aggregation_provides_expected_columns(self):
-        # setup
-        # expected_length = 2
-        # work_orders = pd.DataFrame.from_dict(prepared_wo_table, orient="index")
-        # execution
-        # assets = aggregate_wos_to_assets(work_orders, AGG_MAPPING, VEHICLE_ATTRIBUTES)
-        # validation
-        assert 1
+    # def test_aggregation_provides_expected_columns(self):
+    #     # setup
+    #     # expected_length = 2
+    #     # work_orders = pd.DataFrame.from_dict(prepared_wo_table, orient="index")
+    #     # execution
+    #     # assets = aggregate_wos_to_assets(work_orders, AGG_MAPPING, VEHICLE_ATTRIBUTES)
+    #     # validation
+    #     assert 1

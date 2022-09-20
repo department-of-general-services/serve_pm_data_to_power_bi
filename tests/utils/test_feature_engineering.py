@@ -6,6 +6,7 @@ from pm_stats.utils import (
     compute_vehicle_age,
     rename_cols_in_assets_table,
 )
+
 # from pm_stats.systems.faster import prepared_wo_table
 from pm_stats.utils import VEHICLE_ATTRIBUTES
 
@@ -49,7 +50,7 @@ class TestComputeVehicleAge:
         """
         # setup
         expected_cols: List[str] = VEHICLE_ATTRIBUTES
-        #validation
+        # validation
         assert all(col in test_assets.columns for col in expected_cols)
 
 

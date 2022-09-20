@@ -17,7 +17,9 @@ def create_test_faster() -> Faster:
         Faster: An object of class Faster, with the raw work orders stored as an attribute.
     """
     data = pd.DataFrame.from_dict(raw_wo_table, orient="index")
-    test_faster = Faster(asset_profile="caprice_1_month_cycle", testing_data=data)
+    test_faster = Faster(
+        asset_profile="caprice_1_month_cycle", testing_data=data
+    )
     return test_faster
 
 
