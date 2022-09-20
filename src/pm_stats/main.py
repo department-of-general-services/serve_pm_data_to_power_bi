@@ -1,5 +1,5 @@
 from pm_stats.systems.faster import Faster, QUERY
-from pm_stats.utils.utils import prepare_data
+from pm_stats.utils.utility import prepare_data
 from pm_stats.analysis import MultipleRegression
 from pm_stats.systems.faster import COLUMN_MAPPING
 

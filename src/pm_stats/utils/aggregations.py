@@ -17,13 +17,7 @@ def aggregate_wos_to_assets(
     """
     work_orders = work_orders.copy()
     assets = work_orders.groupby(by="asset_number")[
-        [
-            "pm_due_date",
-            "days_late",
-            "miles_driven",
-            "current_pm_mileage",
-            "work_order_total_cost",
-        ]
+        list(agg_mapping.keys())
     ].agg(agg_mapping)
     # get rid of multilevel index
     assets.columns = assets.columns.map("_".join)
