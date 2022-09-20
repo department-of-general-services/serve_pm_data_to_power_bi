@@ -1,21 +1,24 @@
 import pandas as pd
 
 from pm_stats.utils import aggregate_wos_to_assets
+from pm_stats.systems.faster import prepared_wo_table
+from pm_stats.utils import AGG_MAPPING
 
 
 class TestAggregateWOsToAssets:
     """Class for testing the aggregate_wos_to_assets function"""
 
     def test_rename_cols_is_function(self):
-        """Tests that the rename_cols function is a function"""
+        """Tests that the aggregate_wos_to_assets function is a function"""
         assert callable(aggregate_wos_to_assets)
 
     def test_aggregation_gets_right_row_count(self):
-        """Tests that the rename_cols function transforms column names into
-        expected form."""
+        """Tests that the aggregate_wos_to_assets function gets the right number
+        of assets when aggregating."""
         # setup
-
+        expected_length = 2
+        work_orders = pd.DataFrame.from_dict(prepared_wo_table, orient="index")
         # execution
-
+        assets = aggregate_wos_to_assets(work_orders, AGG_MAPPING)
         # validation
-        assert 1
+        assert len(assets) == expected_length
