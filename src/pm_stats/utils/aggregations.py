@@ -47,6 +47,7 @@ def merge_with_asset_details(
     Returns:
         pd.DataFrame: _description_
     """
+    asset_details["AssetID"] = asset_details["AssetID"].astype(str)
     return (
         assets.merge(
             right=asset_details[["AssetID", "AcquireDate"]],

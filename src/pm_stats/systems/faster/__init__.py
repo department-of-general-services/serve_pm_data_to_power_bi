@@ -5,6 +5,7 @@ __all__ = [
     "ASSETS_QUERY",
     "intermediate_wo_table",
     "prepared_wo_table",
+    "raw_asset_details_table",
     "raw_wo_table",
 ]
 
@@ -18,4 +19,7 @@ from pm_stats.systems.faster.testing_utils.work_orders_data import (
     intermediate_wo_table,
     prepared_wo_table,
     raw_wo_table,
+)
+from pm_stats.systems.faster.testing_utils.assets_data import (
+    raw_asset_details_table,
 )

@@ -85,5 +85,4 @@ class Faster:
         """xyz"""
         print("Getting asset details.")
         df = pd.read_sql_query(db.text(query), self.engine)
-        df["AssetID"] = df["AssetID"].astype(str)
         return df

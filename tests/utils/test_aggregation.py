@@ -1,7 +1,10 @@
 import pandas as pd
 
-from pm_stats.utils import aggregate_wos_to_assets
-from pm_stats.systems.faster import prepared_wo_table
+from pm_stats.utils.aggregations import (
+    aggregate_wos_to_assets,
+    merge_with_asset_details,
+)
+from pm_stats.systems.faster import prepared_wo_table, raw_asset_details_table
 from pm_stats.utils import AGG_MAPPING, VEHICLE_ATTRIBUTES
 
 
@@ -33,3 +36,27 @@ class TestAggregateWOsToAssets:
     #     # assets = aggregate_wos_to_assets(work_orders, AGG_MAPPING, VEHICLE_ATTRIBUTES)
     #     # validation
     #     assert 1
+
+
+class TestMergeWithAssetDetails:
+    """Class for testing the merge_with_asset_details function"""
+
+    def test_merge_with_asset_details_is_function(self):
+        """Tests that the merge_with_asset_details function is a function"""
+        assert callable(merge_with_asset_details)
+
+    def test_merge_with_asset_details_gets_correct_columns(self):
+        """Tests that the merge_with_asset_details function adds the new columns we expect"""
+        # setup
+        work_orders = pd.DataFrame.from_dict(prepared_wo_table, orient="index")
+        assets = aggregate_wos_to_assets(
+            work_orders, AGG_MAPPING, VEHICLE_ATTRIBUTES
+        )
+        asset_details = pd.DataFrame.from_dict(
+            raw_asset_details_table, orient="index"
+        )
+        # execution
+        merged = merge_with_asset_details(assets, asset_details)
+        # validation
+        assert len(merged.columns) > len(assets.columns)
+        assert len(merged.columns) > len(assets.columns)
