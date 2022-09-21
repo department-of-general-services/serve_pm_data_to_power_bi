@@ -9,6 +9,7 @@ WORK_ORDERS_QUERY = """
     @EndDate = :end_date,
     @TimeZone = :time_zone,
     @Length = :length,
+    @Makeid = :make_id,
     @Modelid = :model_id,
     @Usage = :usage;
     """
@@ -34,6 +35,7 @@ PARAMS = {
         "end_date": "20220901",
         "time_zone": 3,
         "length": 3,
+        "make_id": 278, 
         "model_id": 842,
         "usage": "MP",
     },
@@ -42,6 +44,7 @@ PARAMS = {
         "end_date": "20220901",
         "time_zone": 3,
         "length": 1,
+        "make_id": 278,
         "model_id": 842,
         "usage": "MP",
     },
