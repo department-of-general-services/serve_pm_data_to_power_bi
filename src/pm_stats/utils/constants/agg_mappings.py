@@ -8,6 +8,7 @@ AGG_MAPPING = {
 }
 VEHICLE_ATTRIBUTES = [
     "asset_number",
+    "asset_id",
     "vehicle_year",
     "department",
     "make",

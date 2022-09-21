@@ -31,3 +31,49 @@ def aggregate_wos_to_assets(
     # get rid of "_first" suffix for vehicle attributes
     assets.columns = [col.replace("_first", "") for col in assets.columns]
     return assets
+
+
+def merge_with_asset_details(
+    assets: pd.DataFrame, asset_details: pd.DataFrame
+) -> pd.DataFrame:
+    """_summary_
+
+    Args:
+        assets (pd.DataFrame): _description_
+        asset_details (pd.DataFrame): _description_
+
+    Returns:
+        pd.DataFrame: _description_
+    """
+    return assets.merge(
+        right=asset_details[["AssetID", "AcquireDate"]],
+        left_on=["asset_id"],
+        right_on=["AssetID"],
+    )
+
+
+
+def aggregate_and_merge(
+    work_orders: pd.DataFrame,
+    asset_details: pd.DataFrame,
+    agg_mapping: dict,
+    vehicle_attributes: List["str"],
+) -> pd.DataFrame:
+    """_summary_
+
+    Args:
+        work_orders (pd.DataFrame): _description_
+        asset_details (pd.DataFrame): _description_
+        agg_mapping (dict): _description_
+        vehicle_attributes (List[&quot;str&quot;]): _description_
+
+    Returns:
+        pd.DataFrame: _description_
+    """
+    work_orders=work_orders.copy()
+    assets = aggregate_wos_to_assets(
+        work_orders, agg_mapping, vehicle_attributes
+    )
+    print(assets.info())
+    assets = merge_with_asset_details(assets, asset_details)
+    return assets

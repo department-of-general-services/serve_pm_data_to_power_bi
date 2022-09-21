@@ -15,8 +15,8 @@ from pm_stats.systems.faster.models import (
     PARAMS,
     COLUMN_MAPPING,
 )
-from pm_stats.utils.utility import prepare_data
-from pm_stats.utils.aggregations import aggregate_wos_to_assets
+from pm_stats.utils import prepare_data, AGG_MAPPING, VEHICLE_ATTRIBUTES
+from pm_stats.utils.aggregations import aggregate_and_merge
 
 Records = List[dict]
 
@@ -34,6 +34,7 @@ class Faster:
         """Creates engine object."""
         if isinstance(testing_data, pd.DataFrame):
             self.work_orders = testing_data
+            # needs testing version of asset_details
         else:
             if not conn_url:
                 conn_str = (
@@ -47,7 +48,7 @@ class Faster:
                     "mssql+pyodbc", query={"odbc_connect": conn_str}
                 )
             self.engine = db.create_engine(conn_url, pool_pre_ping=True)
-            self.vehicle_model = asset_profile
+            self.asset_profile: str = asset_profile
             self.work_orders: pd.DataFrame = self.get_work_orders(
                 query=WORK_ORDERS_QUERY
             )
@@ -55,6 +56,10 @@ class Faster:
             self.asset_details: pd.DataFrame = self.get_asset_details(
                 query=ASSETS_QUERY
             )
+            self.assets_in_scope = aggregate_and_merge(
+                self.work_orders, self.asset_details, AGG_MAPPING, VEHICLE_ATTRIBUTES
+            )
+            
 
     def return_work_orders(self):
         """Returns a list of work orders."""
@@ -68,7 +73,7 @@ class Faster:
     def get_work_orders(self, query: str) -> pd.DataFrame:
         """xyz"""
         print("Getting work orders")
-        params = PARAMS[self.vehicle_model]
+        params = PARAMS[self.asset_profile]
         df = pd.read_sql_query(db.text(query), self.engine, params=params)
         return df
 

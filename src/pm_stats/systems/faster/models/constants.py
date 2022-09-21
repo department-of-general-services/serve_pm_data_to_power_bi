@@ -48,6 +48,7 @@ PARAMS = {
 }
 
 COLUMN_MAPPING = {
+    "AssetID": "asset_id",
     "AssetNumber": "asset_number",
     "Organization": "organization",
     "Out of Service Date": "out_of_service_date",
