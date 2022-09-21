@@ -1,7 +1,8 @@
 __all__ = [
     "Faster",
     "PARAMS",
-    "QUERY",
+    "WORK_ORDERS_QUERY",
+    "ASSETS_QUERY",
     "COLUMN_MAPPING",
     "BOOL_COLS",
     "DATE_COLS",
@@ -16,7 +17,8 @@ __all__ = [
 from pm_stats.systems.faster.client import Faster
 from pm_stats.systems.faster.models.constants import (
     PARAMS,
-    QUERY,
+    WORK_ORDERS_QUERY,
+    ASSETS_QUERY,
     COLUMN_MAPPING,
     BOOL_COLS,
     DATE_COLS,

@@ -1,7 +1,7 @@
 # from contextlib import AbstractAsyncContextManager
 # from logging.config import _LoggerConfiguration
 
-QUERY = """
+WORK_ORDERS_QUERY = """
     SET NOCOUNT ON;
     SET ARITHABORT ON;
     EXEC [Baltimore].[ZZ_Martix_CostPMLate]
@@ -11,6 +11,21 @@ QUERY = """
     @Length = :length,
     @Modelid = :model_id,
     @Usage = :usage;
+    """
+
+ASSETS_QUERY = """
+    SET NOCOUNT ON;
+    SET ARITHABORT ON;
+
+    SELECT a.AssetID, 
+        a.AssetNumber,
+        q.AcquireDate,
+        a.ModelID, 
+        c.PmDateLength
+    FROM Asset.Asset a
+    LEFT JOIN Asset.PM p ON a.AssetID = p.AssetID
+    LEFT JOIN Asset.Acquire q ON a.AssetID = q.AssetID
+    LEFT JOIN Asset.PmDateCycle c on p.AssetPmID = c.AssetPmID;
     """
 
 PARAMS = {

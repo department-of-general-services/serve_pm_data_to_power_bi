@@ -1,6 +1,6 @@
 # pylint: disable=C0103
 import pandas as pd
-from pm_stats.systems.faster import (
+from pm_stats.systems.faster.models import (
     BOOL_COLS,
     DATE_COLS,
     FLOAT_COLS,

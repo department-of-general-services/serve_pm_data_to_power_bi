@@ -12,4 +12,5 @@ VEHICLE_ATTRIBUTES = [
     "department",
     "make",
     "model",
+    "pm_cycle_length",
 ]
