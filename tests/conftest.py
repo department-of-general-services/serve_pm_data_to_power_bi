@@ -2,11 +2,8 @@ import pandas as pd
 import pytest
 
 from pm_stats.systems.faster import Faster, raw_wo_table, prepared_wo_table
-from pm_stats.utils import (
-    aggregate_wos_to_assets,
-    AGG_MAPPING,
-    VEHICLE_ATTRIBUTES,
-)
+from pm_stats.utils import aggregate_wos_to_assets
+from pm_stats.utils.constants import AGG_MAPPING, VEHICLE_ATTRIBUTES
 
 
 @pytest.fixture(scope="function", name="test_faster")

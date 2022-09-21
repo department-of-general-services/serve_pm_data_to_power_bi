@@ -2,13 +2,10 @@ from typing import List
 from datetime import datetime
 import pandas as pd
 
-from pm_stats.utils import (
-    compute_vehicle_age,
-    rename_cols_in_assets_table,
-)
+from pm_stats.utils import compute_vehicle_age
 
 # from pm_stats.systems.faster import prepared_wo_table
-from pm_stats.utils import VEHICLE_ATTRIBUTES
+from pm_stats.utils.constants import VEHICLE_ATTRIBUTES
 
 
 class TestComputeVehicleAge:
@@ -52,11 +49,3 @@ class TestComputeVehicleAge:
         expected_cols: List[str] = VEHICLE_ATTRIBUTES
         # validation
         assert all(col in test_assets.columns for col in expected_cols)
-
-
-class TestRenameColsInAssetsTable:
-    """Class for testing the rename_cols_in_assets_table function"""
-
-    def test_rename_cols_is_function(self):
-        """Tests that the rename_cols_in_assets_table function is a function"""
-        assert callable(rename_cols_in_assets_table)

@@ -9,19 +9,21 @@ if __name__ == "__main__":
     # obtain data aggregated to asset level
     assets = f.assets_in_scope
     # drop vehicles with only one work order
-    cond_multiple_wos = assets["pm_due_date_nunique"] > 1
+    cond_multiple_wos = assets["work_order_count"] > 1
     assets = assets[cond_multiple_wos]
 
     print(f"Length of assets dataset: {len(assets)}")
     print(assets.info())
+    print(assets.head())
     # define x and y matrix
     mr = MultipleRegression(
         data=assets,
         x_cols=[
             # "current_pm_mileage_min",
             "days_late_mean",
+            "days_late_median",
             "vehicle_days_in_service",
         ],
-        y_col="work_order_total_cost_sum",
+        y_col="total_cost",
     )
     # report on correlations

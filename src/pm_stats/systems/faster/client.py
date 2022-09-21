@@ -15,7 +15,8 @@ from pm_stats.systems.faster.models import (
     PARAMS,
     COLUMN_MAPPING,
 )
-from pm_stats.utils import prepare_data, AGG_MAPPING, VEHICLE_ATTRIBUTES
+from pm_stats.utils import prepare_data
+from pm_stats.utils.constants import AGG_MAPPING, VEHICLE_ATTRIBUTES
 from pm_stats.utils.aggregations import aggregate_and_merge
 from pm_stats.utils.feature_engineering import engineer_features
 

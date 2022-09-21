@@ -1,5 +1,6 @@
 from typing import List
 import pandas as pd
+from pm_stats.utils.constants import AGG_RENAMING
 
 
 def aggregate_wos_to_assets(
@@ -59,11 +60,26 @@ def merge_with_asset_details(
     )
 
 
+def rename_asset_cols(assets: pd.DataFrame, mapping: dict) -> pd.DataFrame:
+    """Provides meaningful, human-readable names for the columns generated
+    during aggregation.
+
+    Args:
+        df (pd.DataFrame): Input dataframe
+        mapping (dict): Instructions for renaming columns
+
+    Returns:
+        pd.DataFrame: Output dataframe
+    """
+    assets = assets.copy()
+    return assets.rename(columns=mapping)
+
+
 def aggregate_and_merge(
     work_orders: pd.DataFrame,
     asset_details: pd.DataFrame,
     agg_mapping: dict,
-    vehicle_attributes: List["str"],
+    vehicle_attributes: List[str],
 ) -> pd.DataFrame:
     """_summary_
 
@@ -71,7 +87,7 @@ def aggregate_and_merge(
         work_orders (pd.DataFrame): _description_
         asset_details (pd.DataFrame): _description_
         agg_mapping (dict): _description_
-        vehicle_attributes (List[&quot;str&quot;]): _description_
+        vehicle_attributes (List[str]): _description_
 
     Returns:
         pd.DataFrame: _description_
@@ -80,6 +96,6 @@ def aggregate_and_merge(
     assets = aggregate_wos_to_assets(
         work_orders, agg_mapping, vehicle_attributes
     )
-    print(assets.info())
     assets = merge_with_asset_details(assets, asset_details)
+    assets = rename_asset_cols(assets, mapping=AGG_RENAMING)
     return assets

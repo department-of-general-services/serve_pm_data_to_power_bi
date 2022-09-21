@@ -3,9 +3,10 @@ import pandas as pd
 from pm_stats.utils.aggregations import (
     aggregate_wos_to_assets,
     merge_with_asset_details,
+    rename_asset_cols,
 )
 from pm_stats.systems.faster import prepared_wo_table, raw_asset_details_table
-from pm_stats.utils import AGG_MAPPING, VEHICLE_ATTRIBUTES
+from pm_stats.utils.constants import AGG_MAPPING, VEHICLE_ATTRIBUTES
 
 
 class TestAggregateWOsToAssets:
@@ -59,4 +60,11 @@ class TestMergeWithAssetDetails:
         merged = merge_with_asset_details(assets, asset_details)
         # validation
         assert len(merged.columns) > len(assets.columns)
-        assert len(merged.columns) > len(assets.columns)
+
+
+class TestRenameAssetCols:
+    """Class for testing the rename_asset_cols function"""
+
+    def test_rename_asset_cols_is_function(self):
+        """Tests that the rename_asset_cols function is a function"""
+        assert callable(rename_asset_cols)

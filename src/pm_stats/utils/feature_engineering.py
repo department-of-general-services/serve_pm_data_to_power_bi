@@ -38,24 +38,6 @@ def compute_days_in_service(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def rename_cols_in_assets_table(
-    df: pd.DataFrame,
-    # mapping: dict
-) -> pd.DataFrame:
-    """Provides meaningful, human-readable names for the columns generated
-    during aggregation.
-
-    Args:
-        df (pd.DataFrame): Input dataframe
-        mapping (dict): Instructions for renaming columns
-
-    Returns:
-        pd.DataFrame: Output dataframe
-    """
-    df = df.copy()
-    return df
-
-
 def engineer_features(assets: pd.DataFrame) -> pd.DataFrame:
     """Full docstring to come"""
     assets = assets.copy()
