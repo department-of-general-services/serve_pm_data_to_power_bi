@@ -9,7 +9,14 @@ from sqlalchemy.engine import URL
 from dynaconf import Dynaconf
 
 from pm_stats.config import settings
-from pm_stats.systems.faster.models import PARAMS
+from pm_stats.systems.faster.models import (
+    ASSETS_QUERY,
+    WORK_ORDERS_QUERY,
+    PARAMS,
+    COLUMN_MAPPING,
+)
+from pm_stats.utils.utility import prepare_data
+from pm_stats.utils.aggregations import aggregate_wos_to_assets
 
 Records = List[dict]
 
@@ -41,7 +48,13 @@ class Faster:
                 )
             self.engine = db.create_engine(conn_url, pool_pre_ping=True)
             self.vehicle_model = asset_profile
-            self.work_orders: pd.DataFrame = None
+            self.work_orders: pd.DataFrame = self.get_work_orders(
+                query=WORK_ORDERS_QUERY
+            )
+            self.work_orders = prepare_data(self.work_orders, COLUMN_MAPPING)
+            self.asset_details: pd.DataFrame = self.get_asset_details(
+                query=ASSETS_QUERY
+            )
 
     def return_work_orders(self):
         """Returns a list of work orders."""
@@ -57,4 +70,10 @@ class Faster:
         print("Getting work orders")
         params = PARAMS[self.vehicle_model]
         df = pd.read_sql_query(db.text(query), self.engine, params=params)
+        return df
+
+    def get_asset_details(self, query: str) -> pd.DataFrame:
+        """xyz"""
+        print("Getting asset details.")
+        df = pd.read_sql_query(db.text(query), self.engine)
         return df

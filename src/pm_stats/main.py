@@ -1,4 +1,4 @@
-from pm_stats.systems.faster import Faster, QUERY
+from pm_stats.systems.faster import Faster, WORK_ORDERS_QUERY
 from pm_stats.utils import (
     aggregate_wos_to_assets,
     compute_vehicle_age,
@@ -7,17 +7,15 @@ from pm_stats.utils import (
     VEHICLE_ATTRIBUTES,
 )
 from pm_stats.analysis import MultipleRegression
-from pm_stats.systems.faster import COLUMN_MAPPING
 
 if __name__ == "__main__":
-    # obtain the data by querying stored procedure
+    # initiate an object of class Faster, with an asset profile
     f = Faster(asset_profile="caprice_3_month_cycle")
-    work_orders_raw = f.get_work_orders(query=QUERY)
-    work_orders = prepare_data(work_orders_raw, COLUMN_MAPPING)
-    print(f"Length of work orders dataset: {len(work_orders)}")
+    f.get_work_orders(query=WORK_ORDERS_QUERY)
+    print(f"Length of work orders dataset: {len(f.work_orders)}")
     # perform aggregation
     assets = aggregate_wos_to_assets(
-        work_orders, AGG_MAPPING, VEHICLE_ATTRIBUTES
+        f.work_orders, AGG_MAPPING, VEHICLE_ATTRIBUTES
     )
     # drop vehicles with only one work order
     cond_multiple_wos = assets["pm_due_date_nunique"] > 1
