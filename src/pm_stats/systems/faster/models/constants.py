@@ -1,7 +1,7 @@
 # from contextlib import AbstractAsyncContextManager
 # from logging.config import _LoggerConfiguration
 
-QUERY = """
+WORK_ORDERS_QUERY = """
     SET NOCOUNT ON;
     SET ARITHABORT ON;
     EXEC [Baltimore].[ZZ_Martix_CostPMLate]
@@ -9,22 +9,67 @@ QUERY = """
     @EndDate = :end_date,
     @TimeZone = :time_zone,
     @Length = :length,
+    @Makeid = :make_id,
     @Modelid = :model_id,
     @Usage = :usage;
     """
 
+ASSETS_QUERY = """
+    SET NOCOUNT ON;
+    SET ARITHABORT ON;
+
+    SELECT a.AssetID, 
+        a.AssetNumber,
+        q.AcquireDate,
+        a.ModelID, 
+        c.PmDateLength
+    FROM Asset.Asset a
+    LEFT JOIN Asset.PM p ON a.AssetID = p.AssetID
+    LEFT JOIN Asset.Acquire q ON a.AssetID = q.AssetID
+    LEFT JOIN Asset.PmDateCycle c on p.AssetPmID = c.AssetPmID;
+    """
+
 PARAMS = {
-    "caprice": {
-        "start_date": "20210701",
+    "caprice_1_month_cycle": {
+        "start_date": "20190701",
+        "end_date": "20220901",
+        "time_zone": 3,
+        "length": 1,
+        "make_id": 278,
+        "model_id": 842,
+        "usage": "MP",
+    },
+    "caprice_3_month_cycle": {
+        "start_date": "20190701",
         "end_date": "20220901",
         "time_zone": 3,
         "length": 3,
+        "make_id": 278,
         "model_id": 842,
         "usage": "MP",
-    }
+    },
+    "interceptor_utility_1_month_cycle": {
+        "start_date": "20190701",
+        "end_date": "20220901",
+        "time_zone": 1,
+        "length": 1,
+        "make_id": 409,
+        "model_id": 1327,
+        "usage": "MP",
+    },
+    "interceptor_utility_3_month_cycle": {
+        "start_date": "20190701",
+        "end_date": "20220901",
+        "time_zone": 3,
+        "length": 3,
+        "make_id": 409,
+        "model_id": 1327,
+        "usage": "MP",
+    },
 }
 
 COLUMN_MAPPING = {
+    "AssetID": "asset_id",
     "AssetNumber": "asset_number",
     "Organization": "organization",
     "Out of Service Date": "out_of_service_date",
@@ -70,6 +115,7 @@ COLUMN_MAPPING = {
 OBJECT_COLS = [
     "accident",
     "agency",
+    "asset_id",
     "asset_number",
     "assigned_asset_shop",
     "class",

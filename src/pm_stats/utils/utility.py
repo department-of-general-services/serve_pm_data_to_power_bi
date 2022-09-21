@@ -1,6 +1,6 @@
 # pylint: disable=C0103
 import pandas as pd
-from pm_stats.systems.faster import (
+from pm_stats.systems.faster.models import (
     BOOL_COLS,
     DATE_COLS,
     FLOAT_COLS,
@@ -90,6 +90,7 @@ def prepare_data(df: pd.DataFrame, mapping: dict) -> pd.DataFrame:
         pd.DataFrame: _description_
     """
     df = df.copy()
+    #
     df = rename_cols(df, mapping=mapping)
     df = cast_init_types(df)
     df = replace_values(df)

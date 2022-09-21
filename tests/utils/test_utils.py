@@ -15,15 +15,17 @@ from pm_stats.utils import (
     replace_values,
 )
 from pm_stats.systems.faster import (
+    intermediate_wo_table,
+    raw_wo_table,
+    prepared_wo_table,
+)
+from pm_stats.systems.faster.models import (
     COLUMN_MAPPING,
     OBJECT_COLS,
     INT_COLS,
     BOOL_COLS,
     FLOAT_COLS,
     DATE_COLS,
-    intermediate_wo_table,
-    raw_wo_table,
-    prepared_wo_table,
 )
 
 

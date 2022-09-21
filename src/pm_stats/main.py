@@ -1,45 +1,29 @@
-from pm_stats.systems.faster import Faster, QUERY
-from pm_stats.utils.utils import prepare_data
+from pm_stats.systems.faster import Faster
 from pm_stats.analysis import MultipleRegression
-from pm_stats.systems.faster import COLUMN_MAPPING
 
 if __name__ == "__main__":
-    # obtain the data by querying stored procedure
-    f = Faster()
-    work_orders_raw = f.get_work_orders(query=QUERY)
-    work_orders = prepare_data(work_orders_raw, COLUMN_MAPPING)
-    # set aggregation
-    agg_functions = {
-        "current_pm_mileage": ["min"],
-        "days_late": ["mean"],
-        "miles_driven": ["mean"],
-        "pm_due_date": ["nunique"],
-        "work_order_total_cost": ["sum"],
-    }
-    # take the average
-    vehicles = work_orders.groupby(by="asset_number")[
-        [
-            "pm_due_date",
-            "days_late",
-            "miles_driven",
-            "current_pm_mileage",
-            "work_order_total_cost",
-        ]
-    ].agg(agg_functions)
-    vehicles.columns = vehicles.columns.map("_".join)
-    # print(averages.head())
-    # print(averages.columns)
+    # initiate an object of class Faster, with an asset profile
+    f = Faster(asset_profile="interceptor_utility_1_month_cycle")
+    print(f"Length of work orders dataset: {len(f.work_orders)}")
+    print(f"COLUMNS: {f.work_orders.columns}")
+    # obtain data aggregated to asset level
+    assets = f.assets_in_scope
     # drop vehicles with only one work order
-    cond_multiple_wos = vehicles["pm_due_date_nunique"] > 1
-    vehicles = vehicles[cond_multiple_wos]
+    cond_multiple_wos = assets["work_order_count"] > 1
+    assets = assets[cond_multiple_wos]
+
+    print(f"Length of assets dataset: {len(assets)}")
+    print(assets.info())
+    print(assets.head())
     # define x and y matrix
     mr = MultipleRegression(
-        data=vehicles,
+        data=assets,
         x_cols=[
             # "current_pm_mileage_min",
             "days_late_mean",
-            "miles_driven_mean",
+            "days_late_median",
+            "vehicle_days_in_service",
         ],
-        y_col="work_order_total_cost_sum",
+        y_col="total_cost",
     )
     # report on correlations
