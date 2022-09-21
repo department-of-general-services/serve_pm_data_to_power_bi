@@ -23,13 +23,15 @@ def aggregate_wos_to_assets(
     # ensure that vehicle attributes get added to agg_mapping
     for attribute in vehicle_attributes:
         agg_mapping[attribute] = ["first"]
-    assets = work_orders.groupby(by="asset_number")[
-        list(agg_mapping.keys())
-    ].agg(agg_mapping)
+    assets = work_orders.groupby(by="asset_id")[list(agg_mapping.keys())].agg(
+        agg_mapping
+    )
     # get rid of multilevel index
     assets.columns = assets.columns.map("_".join)
     # get rid of "_first" suffix for vehicle attributes
     assets.columns = [col.replace("_first", "") for col in assets.columns]
+    # to avoid the error during merge about how asset_id is both index and column
+    assets = assets.reset_index(drop=True)
     return assets
 
 
@@ -45,12 +47,15 @@ def merge_with_asset_details(
     Returns:
         pd.DataFrame: _description_
     """
-    return assets.merge(
-        right=asset_details[["AssetID", "AcquireDate"]],
-        left_on=["asset_id"],
-        right_on=["AssetID"],
+    return (
+        assets.merge(
+            right=asset_details[["AssetID", "AcquireDate"]],
+            left_on=["asset_id"],
+            right_on=["AssetID"],
+        )
+        .drop(columns=["AssetID"])
+        .rename(columns={"AcquireDate": "acquire_date"})
     )
-
 
 
 def aggregate_and_merge(
@@ -70,7 +75,7 @@ def aggregate_and_merge(
     Returns:
         pd.DataFrame: _description_
     """
-    work_orders=work_orders.copy()
+    work_orders = work_orders.copy()
     assets = aggregate_wos_to_assets(
         work_orders, agg_mapping, vehicle_attributes
     )

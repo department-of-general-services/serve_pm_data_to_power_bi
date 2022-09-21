@@ -30,15 +30,6 @@ ASSETS_QUERY = """
     """
 
 PARAMS = {
-    "caprice_3_month_cycle": {
-        "start_date": "20190701",
-        "end_date": "20220901",
-        "time_zone": 3,
-        "length": 3,
-        "make_id": 278, 
-        "model_id": 842,
-        "usage": "MP",
-    },
     "caprice_1_month_cycle": {
         "start_date": "20190701",
         "end_date": "20220901",
@@ -46,6 +37,33 @@ PARAMS = {
         "length": 1,
         "make_id": 278,
         "model_id": 842,
+        "usage": "MP",
+    },
+    "caprice_3_month_cycle": {
+        "start_date": "20190701",
+        "end_date": "20220901",
+        "time_zone": 3,
+        "length": 3,
+        "make_id": 278,
+        "model_id": 842,
+        "usage": "MP",
+    },
+    "interceptor_utility_1_month_cycle": {
+        "start_date": "20190701",
+        "end_date": "20220901",
+        "time_zone": 1,
+        "length": 1,
+        "make_id": 409,
+        "model_id": 1327,
+        "usage": "MP",
+    },
+    "interceptor_utility_3_month_cycle": {
+        "start_date": "20190701",
+        "end_date": "20220901",
+        "time_zone": 3,
+        "length": 3,
+        "make_id": 409,
+        "model_id": 1327,
         "usage": "MP",
     },
 }
@@ -97,6 +115,7 @@ COLUMN_MAPPING = {
 OBJECT_COLS = [
     "accident",
     "agency",
+    "asset_id",
     "asset_number",
     "assigned_asset_shop",
     "class",

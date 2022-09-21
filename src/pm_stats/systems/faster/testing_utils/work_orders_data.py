@@ -3,6 +3,7 @@ import numpy as np
 
 raw_wo_table = {
     "wo_1": {
+        "AssetID": 1,
         "AssetNumber": "012",
         "Organization": "Active",
         "Out of Service Date": np.NAN,
@@ -45,6 +46,7 @@ raw_wo_table = {
         "Miles Driven": 27059,
     },
     "wo_2": {
+        "AssetID": 1,
         "AssetNumber": "012",
         "Organization": "Active",
         "Out of Service Date": np.NAN,
@@ -87,6 +89,7 @@ raw_wo_table = {
         "Miles Driven": 100,
     },
     "wo_3": {
+        "AssetID": 2,
         "AssetNumber": "013",
         "Organization": "Active",
         "Out of Service Date": np.NAN,
@@ -147,6 +150,7 @@ intermediate_wo_table = {
 
 prepared_wo_table = {
     "wo_1": {
+        "asset_id": "1",
         "asset_number": "012",
         "organization": "Active",
         "out_of_service_date": np.NAN,
@@ -189,6 +193,7 @@ prepared_wo_table = {
         "miles_driven": 27059.0,
     },
     "wo_2": {
+        "asset_id": "1",
         "asset_number": "012",
         "organization": "Active",
         "out_of_service_date": np.NAN,
@@ -231,6 +236,7 @@ prepared_wo_table = {
         "miles_driven": 100.0,
     },
     "wo_3": {
+        "asset_id": "2",
         "asset_number": "013",
         "organization": "Active",
         "out_of_service_date": np.NAN,

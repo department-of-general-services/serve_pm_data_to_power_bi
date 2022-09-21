@@ -17,6 +17,7 @@ from pm_stats.systems.faster.models import (
 )
 from pm_stats.utils import prepare_data, AGG_MAPPING, VEHICLE_ATTRIBUTES
 from pm_stats.utils.aggregations import aggregate_and_merge
+from pm_stats.utils.feature_engineering import engineer_features
 
 Records = List[dict]
 
@@ -57,9 +58,12 @@ class Faster:
                 query=ASSETS_QUERY
             )
             self.assets_in_scope = aggregate_and_merge(
-                self.work_orders, self.asset_details, AGG_MAPPING, VEHICLE_ATTRIBUTES
+                self.work_orders,
+                self.asset_details,
+                AGG_MAPPING,
+                VEHICLE_ATTRIBUTES,
             )
-            
+            self.assets_in_scope = engineer_features(self.assets_in_scope)
 
     def return_work_orders(self):
         """Returns a list of work orders."""
@@ -81,4 +85,5 @@ class Faster:
         """xyz"""
         print("Getting asset details.")
         df = pd.read_sql_query(db.text(query), self.engine)
+        df["AssetID"] = df["AssetID"].astype(str)
         return df

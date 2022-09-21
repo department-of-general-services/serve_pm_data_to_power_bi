@@ -7,7 +7,7 @@ __all__ = [
     "DATE_COLS",
     "FLOAT_COLS",
     "INT_COLS",
-    "OBJECT COLS",
+    "OBJECT_COLS",
 ]
 
 from pm_stats.systems.faster.models.constants import (
