@@ -1,4 +1,3 @@
-# pylint: disable=C0103
 from pathlib import Path
 import pandas as pd
 import numpy as np
@@ -22,118 +21,125 @@ def load_experiments(experiments_path: Path) -> dict:
     Returns:
         dict: Python dictionary containing instructions for how to run the experiment
     """
-    with open(experiments_path) as file:
+    with open(experiments_path, "rt", encoding="utf-8") as file:
         experiments = yaml.safe_load(file)
         return experiments
 
 
-def rename_cols(df: pd.DataFrame, mapping: dict) -> pd.DataFrame:
+def rename_cols(work_orders: pd.DataFrame, mapping: dict) -> pd.DataFrame:
     """Renames the columns of the dataframe according to a
     dictionary with mapping.
 
     Args:
-        df (pd.DataFrame): Input dataframe
+        work_orders (pd.DataFrame): Input dataframe
         mapping (dict): Key-value pairs with name-change instructions
 
     Returns:
         pd.DataFrame: Output dataframe
     """
-    df = df.copy()
-    return df.rename(columns=mapping)
+    work_orders = work_orders.copy()
+    return work_orders.rename(columns=mapping)
 
 
-def cast_init_types(df: pd.DataFrame) -> pd.DataFrame:
+def cast_init_types(work_orders: pd.DataFrame) -> pd.DataFrame:
     """Sets initial types for work orders data returned by
     the stored procedure in Faster.
 
     Args:
-        df (pd.DataFrame): Input dataframe
+        work_orders (pd.DataFrame): Input dataframe
 
     Returns:
         pd.DataFrame: Output dataframe
     """
-    df = df.copy()
-    df[OBJECT_COLS] = df[OBJECT_COLS].fillna("").astype(str)
-    df[INT_COLS] = df[INT_COLS].astype("Int64")
-    df[FLOAT_COLS] = df[FLOAT_COLS].astype(float)
-    df[DATE_COLS] = df[DATE_COLS].astype("datetime64[ns]")
-    df[BOOL_COLS] = df[BOOL_COLS].astype(bool)
-    return df
+    work_orders = work_orders.copy()
+    work_orders[OBJECT_COLS] = work_orders[OBJECT_COLS].fillna("").astype(str)
+    work_orders[INT_COLS] = work_orders[INT_COLS].astype("Int64")
+    work_orders[FLOAT_COLS] = work_orders[FLOAT_COLS].astype(float)
+    work_orders[DATE_COLS] = work_orders[DATE_COLS].astype("datetime64[ns]")
+    work_orders[BOOL_COLS] = work_orders[BOOL_COLS].astype(bool)
+    return work_orders
 
 
-def replace_values(df: pd.DataFrame) -> pd.DataFrame:
+def replace_values(work_orders: pd.DataFrame) -> pd.DataFrame:
     """Replaces values to allow consistent typing.
 
     Args:
-        df (pd.DataFrame): Input dataframe
+        work_orders (pd.DataFrame): Input dataframe
 
     Returns:
         pd.DataFrame: Output dataframe
     """
-    df = df.copy()
+    work_orders = work_orders.copy()
     mapper = {"Y": 1, "N": 0, "": 0}
-    df[["road_call", "accident"]] = df[["road_call", "accident"]].replace(
+    work_orders[["road_call", "accident"]] = work_orders[["road_call", "accident"]].replace(
         mapper
     )
-    return df
+    return work_orders
 
 
-def compute_weeks_late(df: pd.DataFrame) -> pd.DataFrame:
+def compute_weeks_late(work_orders: pd.DataFrame) -> pd.DataFrame:
     """Converts the days_late column to weeks, which are more
     appropriate for communicating with agencies.
 
     Args:
-        df (pd.DataFrame): _description_
+        work_orders (pd.DataFrame): _description_
 
     Returns:
         pd.DataFrame: _description_
     """
-    df = df.copy()
-    df["weeks_late"] = df["days_late"].astype(
+    work_orders = work_orders.copy()
+    work_orders["weeks_late"] = work_orders["days_late"].astype(
         "timedelta64[D]"
     ) / np.timedelta64(1, "W")
-    return df
+    return work_orders
 
 
-def cast_types(df: pd.DataFrame) -> pd.DataFrame:
+def cast_types(work_orders: pd.DataFrame) -> pd.DataFrame:
     """After initial type-casting and value replacement, we have
     a bit more to do to get the adjusted data cast to
     the right types.
 
     Args:
-        df (pd.DataFrame): Input dataframe
+        work_orders (pd.DataFrame): Input dataframe
 
     Returns:
         pd.DataFrame: Output dataframe
     """
-    df = df.copy()
-    df[["is_off_schedule", "is_on_schedule"]] = df[
-        ["is_off_schedule", "is_on_schedule"]
+    work_orders = work_orders.copy()
+    work_orders[["is_off_schedule", "is_on_schedule", "accident", "road_call"]] = work_orders[
+        ["is_off_schedule", "is_on_schedule", "accident", "road_call"]
     ].astype(bool)
-    return df
+    return work_orders
 
 
-def drop_accidents(df: pd.DataFrame) -> pd.DataFrame:
-    cond_no_accident = df["accident"] == False
-    return df[cond_no_accident]
+def drop_accidents(work_orders: pd.DataFrame) -> pd.DataFrame:
+    """Drops work orders including an accident
+
+    Args:
+        work_orders (pd.DataFrame): _description_
+
+    Returns:
+        pd.DataFrame: _description_
+    """
+    return work_orders[~work_orders["accident"]]
 
 
-def prepare_data(df: pd.DataFrame, mapping: dict) -> pd.DataFrame:
+def prepare_data(work_orders: pd.DataFrame, mapping: dict) -> pd.DataFrame:
     """Runs all data-preparation functions in sequence to
     complete workflow.
 
     Args:
-        df (pd.DataFrame): Input dataframe
+        work_orders (pd.DataFrame): Input dataframe
         mapping (dict): Output dataframe
 
     Returns:
         pd.DataFrame: _description_
     """
-    df = df.copy()
-    df = rename_cols(df, mapping=mapping)
-    df = cast_init_types(df)
-    df = replace_values(df)
-    df = drop_accidents(df)
-    df = compute_weeks_late(df)
-    df = cast_types(df)
-    return df
+    work_orders = work_orders.copy()
+    work_orders = rename_cols(work_orders, mapping=mapping)
+    work_orders = cast_init_types(work_orders)
+    work_orders = replace_values(work_orders)
+    work_orders = cast_types(work_orders)
+    work_orders = compute_weeks_late(work_orders)
+    work_orders = drop_accidents(work_orders)
+    return work_orders
