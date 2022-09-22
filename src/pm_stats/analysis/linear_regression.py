@@ -27,5 +27,12 @@ class MultipleRegression:
         """Fits a multiple linear regression model to the data."""
         self.X = sm.add_constant(self.X)
         estimate = sm.OLS(self.y, self.X).fit()
-        print(estimate.summary())
+        rsquared = round(estimate.rsquared, 2)
+        adj_rsquared = round(estimate.rsquared_adj, 2) 
+        print(f"Rsquared: {rsquared}\nAdjusted Rsquared: {adj_rsquared}")
+        print("\n")
+        print(estimate.params)
+        print("\n")
+        print(estimate.pvalues)
+        print("\n\n")
         return estimate
