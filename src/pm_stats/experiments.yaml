@@ -1,0 +1,12 @@
+# date of the earliest work order to pull
+start_date: "2019-07-01"
+# date of the latest work order to pull
+end_date: "2022-09-01"
+time_zone: 3
+# how many work orders must a vehicle have to be included in aggregate modeling?
+minimum_work_orders: 5
+# ensures that we're not dropping in very new vehicles with onboarding costs
+minimum_years_in_service: 3
+# choices: total_cost, mean_cost, median_cost
+dependent_variable: "mean_cost"
+

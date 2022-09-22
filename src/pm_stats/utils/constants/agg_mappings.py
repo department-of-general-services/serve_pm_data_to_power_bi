@@ -4,8 +4,9 @@ AGG_MAPPING = {
     "done_at_date": ["min", "max"],
     "current_pm_mileage": ["min", "max"],
     "weeks_late": ["mean", "median"],
-    "miles_driven": ["mean"],
-    "work_order_total_cost": ["sum"],
+    "miles_driven": ["sum", "mean"],
+    "labor_hours": ["sum", "mean", "median"],
+    "work_order_total_cost": ["sum", "mean", "median"],
 }
 # Renaming scheme for aggregated work-order data
 AGG_RENAMING = {
@@ -16,8 +17,14 @@ AGG_RENAMING = {
     "current_pm_mileage_max": "ending_mileage",
     "days_late_mean": "days_late_mean",
     "days_late_median": "days_late_median",
+    "miles_driven_sum": "total_miles_driven",
     "miles_driven_mean": "miles_driven_mean",
+    "labor_hours_sum": "total_labor_hours",
+    "labor_hours_mean": "mean_labor_hours",
+    "labor_hours_median": "median_labor_hours",
     "work_order_total_cost_sum": "total_cost",
+    "work_order_total_cost_mean": "mean_cost",
+    "work_order_total_cost_median": "median_cost",
 }
 # Attributes of the asset that don't vary by work order
 VEHICLE_ATTRIBUTES = [

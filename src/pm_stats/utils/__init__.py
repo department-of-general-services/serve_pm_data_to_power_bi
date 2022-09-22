@@ -17,6 +17,6 @@ from pm_stats.utils.utility import (
 )
 
 from pm_stats.utils.aggregations import aggregate_wos_to_assets
-from pm_stats.utils.feature_engineering import (
+from pm_stats.utils.assets_feature_engineering import (
     compute_vehicle_age,
 )

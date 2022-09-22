@@ -31,9 +31,9 @@ def compute_duration_in_service(df: pd.DataFrame) -> pd.DataFrame:
         pd.DataFrame: _description_
     """
     df = df.copy()
-    current_date = datetime.now()
+    date_of_first_work_order = df["first_completion_date"]
     df["vehicle_years_in_service"] = (
-        current_date - df["acquire_date"]
+        date_of_first_work_order - df["acquire_date"]
     ) / np.timedelta64(1, "Y")
 
     return df

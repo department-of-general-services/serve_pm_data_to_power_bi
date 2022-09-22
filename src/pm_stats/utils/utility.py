@@ -1,6 +1,8 @@
 # pylint: disable=C0103
+from pathlib import Path
 import pandas as pd
 import numpy as np
+import yaml
 from pm_stats.systems.faster.models import (
     BOOL_COLS,
     DATE_COLS,
@@ -8,6 +10,21 @@ from pm_stats.systems.faster.models import (
     INT_COLS,
     OBJECT_COLS,
 )
+
+
+def load_experiments(experiments_path: Path) -> dict:
+    """Reads the experiments configuration file from YAML format
+    and renders it as a dictionary.
+
+    Args:
+        experiments_path (Path): The path to the YAML file
+
+    Returns:
+        dict: Python dictionary containing instructions for how to run the experiment
+    """
+    with open(experiments_path) as file:
+        experiments = yaml.safe_load(file)
+        return experiments
 
 
 def rename_cols(df: pd.DataFrame, mapping: dict) -> pd.DataFrame:
@@ -63,7 +80,7 @@ def replace_values(df: pd.DataFrame) -> pd.DataFrame:
 
 def compute_weeks_late(df: pd.DataFrame) -> pd.DataFrame:
     """Converts the days_late column to weeks, which are more
-    appropriate for communicating with agencies. 
+    appropriate for communicating with agencies.
 
     Args:
         df (pd.DataFrame): _description_
@@ -96,6 +113,11 @@ def cast_types(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def drop_accidents(df: pd.DataFrame) -> pd.DataFrame:
+    cond_no_accident = df["accident"] == False
+    return df[cond_no_accident]
+
+
 def prepare_data(df: pd.DataFrame, mapping: dict) -> pd.DataFrame:
     """Runs all data-preparation functions in sequence to
     complete workflow.
@@ -108,10 +130,10 @@ def prepare_data(df: pd.DataFrame, mapping: dict) -> pd.DataFrame:
         pd.DataFrame: _description_
     """
     df = df.copy()
-    df = compute_weeks_late(df)
     df = rename_cols(df, mapping=mapping)
     df = cast_init_types(df)
     df = replace_values(df)
-
+    df = drop_accidents(df)
+    df = compute_weeks_late(df)
     df = cast_types(df)
     return df
