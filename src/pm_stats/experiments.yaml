@@ -1,5 +1,5 @@
 # date of the earliest work order to pull
-start_date: "2019-07-01"
+start_date: "2020-09-01"
 # date of the latest work order to pull
 end_date: "2022-09-01"
 time_zone: 3
@@ -9,4 +9,7 @@ minimum_work_orders: 5
 minimum_years_in_service: 3
 # choices: total_cost, mean_cost, median_cost
 dependent_variable: "mean_cost"
-
+predictors: ["weeks_late_mean", "starting_mileage", "miles_driven_mean", "vehicle_years_in_service"]
+# "total_miles_driven",
+# "miles_driven_mean",
+# "vehicle_years_in_service",

@@ -26,7 +26,8 @@ ASSETS_QUERY = """
     FROM Asset.Asset a
     LEFT JOIN Asset.PM p ON a.AssetID = p.AssetID
     LEFT JOIN Asset.Acquire q ON a.AssetID = q.AssetID
-    LEFT JOIN Asset.PmDateCycle c on p.AssetPmID = c.AssetPmID;
+    LEFT JOIN Asset.PmDateCycle c on p.AssetPmID = c.AssetPmID
+    WHERE q.AcquireDate >= '2005-01-01';
     """
 
 PARAMS = {
@@ -54,12 +55,25 @@ PARAMS = {
         "model_id": 1327,
         "usage": "MP",
     },
-    "ford_fiesta_AV_4_month_cycle": {
-        "length": 4,
+    "interceptor_mp_1_month_cycle": {
+        "length": 1,
         "make_id": 409,
-        "model_id": 1129,
-        "usage": "AV",
+        "model_id": 1326,
+        "usage": "MP",
     },
+    "interceptor_mp_3_month_cycle": {
+        "length": 3,
+        "make_id": 409,
+        "model_id": 1326,
+        "usage": "MP",
+    },
+    # These vehicles are used too generally to model accurately
+    # "ford_fiesta_AV_4_month_cycle": { 
+    #     "length": 4,
+    #     "make_id": 409,
+    #     "model_id": 1129,
+    #     "usage": "AV",
+    # },
     "ford_F250_HP_4_month_cycle": {
         "length": 4,
         "make_id": 409,
@@ -71,6 +85,12 @@ PARAMS = {
         "make_id": 580,
         "model_id": 1402,
         "usage": "LC",
+    },
+    "autocar_cobra_tc_3_month_cycle": {
+        "length": 3,
+        "make_id": 217,
+        "model_id": 1481,
+        "usage": "TC",
     },
 }
 
