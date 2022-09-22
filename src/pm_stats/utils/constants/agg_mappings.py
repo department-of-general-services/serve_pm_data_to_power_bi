@@ -3,7 +3,7 @@ AGG_MAPPING = {
     "work_order_number": ["nunique"],
     "done_at_date": ["min", "max"],
     "current_pm_mileage": ["min", "max"],
-    "days_late": ["mean", "median"],
+    "weeks_late": ["mean", "median"],
     "miles_driven": ["mean"],
     "work_order_total_cost": ["sum"],
 }

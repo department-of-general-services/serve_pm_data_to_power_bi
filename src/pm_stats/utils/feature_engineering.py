@@ -20,9 +20,9 @@ def compute_vehicle_age(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def compute_days_in_service(df: pd.DataFrame) -> pd.DataFrame:
-    """Computes the age of the vehicle by computing the number of days
-    between today's date and the date of the vehicle's acquisition.
+def compute_duration_in_service(df: pd.DataFrame) -> pd.DataFrame:
+    """Computes the age of the vehicle by computing the number of years
+    between the date of the vehicle's acquisition and today's date.
 
     Args:
         df (pd.DataFrame): _description_
@@ -32,15 +32,16 @@ def compute_days_in_service(df: pd.DataFrame) -> pd.DataFrame:
     """
     df = df.copy()
     current_date = datetime.now()
-    df["vehicle_days_in_service"] = (
+    df["vehicle_years_in_service"] = (
         current_date - df["acquire_date"]
-    ) / np.timedelta64(1, "D")
+    ) / np.timedelta64(1, "Y")
+
     return df
 
 
-def engineer_features(assets: pd.DataFrame) -> pd.DataFrame:
+def engineer_asset_features(assets: pd.DataFrame) -> pd.DataFrame:
     """Full docstring to come"""
     assets = assets.copy()
     assets = compute_vehicle_age(assets)
-    assets = compute_days_in_service(assets)
+    assets = compute_duration_in_service(assets)
     return assets

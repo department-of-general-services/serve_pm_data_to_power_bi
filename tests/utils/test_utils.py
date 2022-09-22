@@ -40,7 +40,7 @@ class TestRenameCols:
         """Tests that the rename_cols function transforms column names into
         expected form."""
         # setup
-        expected = pd.DataFrame.from_dict(prepared_wo_table, orient="index")
+        expected = pd.DataFrame.from_dict(prepared_wo_table, orient="index").drop(columns="weeks_late")
         raw_data = pd.DataFrame.from_dict(raw_wo_table, orient="index")
         # execution
         renamed = rename_cols(raw_data, COLUMN_MAPPING)

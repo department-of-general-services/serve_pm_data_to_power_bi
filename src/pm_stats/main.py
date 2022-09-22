@@ -3,7 +3,7 @@ from pm_stats.analysis import MultipleRegression
 
 if __name__ == "__main__":
     # initiate an object of class Faster, with an asset profile
-    f = Faster(asset_profile="interceptor_utility_1_month_cycle")
+    f = Faster(asset_profile="mitsubishi_loadpacker_LC_3_month_cycle")
     print(f"Length of work orders dataset: {len(f.work_orders)}")
     print(f"COLUMNS: {f.work_orders.columns}")
     # obtain data aggregated to asset level
@@ -20,9 +20,9 @@ if __name__ == "__main__":
         data=assets,
         x_cols=[
             # "current_pm_mileage_min",
-            "days_late_mean",
-            "days_late_median",
-            "vehicle_days_in_service",
+            "weeks_late_mean",
+            "weeks_late_median",
+            "vehicle_years_in_service",
         ],
         y_col="total_cost",
     )

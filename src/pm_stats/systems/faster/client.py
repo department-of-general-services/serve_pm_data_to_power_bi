@@ -18,7 +18,7 @@ from pm_stats.systems.faster.models import (
 from pm_stats.utils import prepare_data
 from pm_stats.utils.constants import AGG_MAPPING, VEHICLE_ATTRIBUTES
 from pm_stats.utils.aggregations import aggregate_and_merge
-from pm_stats.utils.feature_engineering import engineer_features
+from pm_stats.utils.feature_engineering import engineer_asset_features
 
 Records = List[dict]
 
@@ -64,7 +64,7 @@ class Faster:
                 AGG_MAPPING,
                 VEHICLE_ATTRIBUTES,
             )
-            self.assets_in_scope = engineer_features(self.assets_in_scope)
+            self.assets_in_scope = engineer_asset_features(self.assets_in_scope)
 
     def return_work_orders(self):
         """Returns a list of work orders."""
