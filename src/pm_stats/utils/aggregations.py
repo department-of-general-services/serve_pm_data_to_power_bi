@@ -1,6 +1,6 @@
 from typing import List
 import pandas as pd
-from pm_stats.utils.constants import AGG_RENAMING
+from pm_stats.utils.constants import AGG_RENAMING, MILEAGE_COLS
 
 
 def aggregate_wos_to_assets(
@@ -75,6 +75,22 @@ def rename_asset_cols(assets: pd.DataFrame, mapping: dict) -> pd.DataFrame:
     return assets.rename(columns=mapping)
 
 
+def divide_mileage_by_thousand(
+    assets: pd.DataFrame, mileage_cols: List[str]
+) -> pd.DataFrame:
+    """Changes the values of the mileage columns by dividing by 1,000.
+
+    Args:
+        assets (pd.DataFrame): A table of data with one row per asset
+
+    Returns:
+        pd.DataFrame: Output table, same as input except mileage columns are in thousands
+    """
+    assets = assets.copy()
+    assets[mileage_cols] = assets[mileage_cols] / 1_000
+    return assets
+
+
 def aggregate_and_merge(
     work_orders: pd.DataFrame,
     asset_details: pd.DataFrame,
@@ -98,4 +114,5 @@ def aggregate_and_merge(
     )
     assets = merge_with_asset_details(assets, asset_details)
     assets = rename_asset_cols(assets, mapping=AGG_RENAMING)
+    assets = divide_mileage_by_thousand(assets, mileage_cols=MILEAGE_COLS)
     return assets

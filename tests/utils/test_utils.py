@@ -1,4 +1,5 @@
 # pylint: disable=C0103
+from pathlib import Path
 import pandas as pd
 from pandas.api.types import (
     is_bool_dtype,
@@ -10,6 +11,7 @@ from pandas.api.types import (
 from pm_stats.utils import (
     # cast_types,
     cast_init_types,
+    load_experiments,
     rename_cols,
     # prepare_data,
     replace_values,
@@ -29,6 +31,39 @@ from pm_stats.systems.faster.models import (
 )
 
 
+class TestLoadExperiments:
+    """Class for testing the load_experiments function"""
+
+    def test_load_experiments_returns_dict(self):
+        """Tests that the load_experiments function returns a dictionary"""
+        # setup
+        experiments_path = Path.cwd() / "src" / "pm_stats" / "experiments.yaml"
+        # execution
+        experiment = load_experiments(experiments_path)
+        # validation
+        assert isinstance(experiment, dict)
+
+    def test_dict_contains_required_params(self):
+        """Tests that a group of required paramaters exists in the
+        experiments dictionary
+        """
+        # setup
+        experiments_path = Path.cwd() / "src" / "pm_stats" / "experiments.yaml"
+        required_params = [
+            "start_date",
+            "end_date",
+            "time_zone",
+            "minimum_work_orders",
+            "minimum_years_in_service",
+            "dependent_variable",
+            "predictors",
+        ]
+        # execution
+        experiment = load_experiments(experiments_path)
+        # validation
+        assert set(required_params).issubset(list(experiment.keys()))
+
+
 class TestRenameCols:
     """Class for testing the rename function"""
 
@@ -40,7 +75,9 @@ class TestRenameCols:
         """Tests that the rename_cols function transforms column names into
         expected form."""
         # setup
-        expected = pd.DataFrame.from_dict(prepared_wo_table, orient="index")
+        expected = pd.DataFrame.from_dict(
+            prepared_wo_table, orient="index"
+        ).drop(columns="weeks_late")
         raw_data = pd.DataFrame.from_dict(raw_wo_table, orient="index")
         # execution
         renamed = rename_cols(raw_data, COLUMN_MAPPING)
@@ -61,7 +98,6 @@ class TestCastInitTypes:
         # setup
         raw_data = pd.DataFrame.from_dict(raw_wo_table, orient="index")
         renamed = rename_cols(raw_data, COLUMN_MAPPING)
-        print(renamed.columns)
         # execution
         type_cast = cast_init_types(renamed)
         # validation
