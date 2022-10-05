@@ -1,4 +1,6 @@
 from pathlib import Path
+import pandas as pd
+
 from pm_stats.systems.faster import Faster
 from pm_stats.analysis import MultipleRegression
 from pm_stats.utils.utility import load_experiments
@@ -9,15 +11,14 @@ if __name__ == "__main__":
     experiment = load_experiments(experiments_path)
     # initiate an object of class Faster, with an asset profile
     f = Faster()
-    for asset_profile in PARAMS.keys():
-        f.query(
-            asset_profile=f"{asset_profile}", experiment=experiment
-        )
+    assets_output = pd.DataFrame()
+    for asset_profile in PARAMS:
+        f.query(asset_profile=f"{asset_profile}", experiment=experiment)
         # obtain data aggregated to asset level
         assets = f.assets_in_scope
         # drop vehicles with too few work orders
-        cond_multiple_wos = (
-            assets["work_order_count"] >= int(experiment["minimum_work_orders"])
+        cond_multiple_wos = assets["work_order_count"] >= int(
+            experiment["minimum_work_orders"]
         )
         assets = assets[cond_multiple_wos]
         cond_not_brand_new = (
