@@ -31,36 +31,42 @@ ASSETS_QUERY = """
     """
 
 PARAMS = {
+    # profile 1
     "capriceppv_mp_1_month_cycle": {
         "length": 1,
         "make_id": 278,
         "model_id": 842,
         "usage": "MP",
     },
+    # profile 2
     "capriceppv_mp_3_month_cycle": {
         "length": 3,
         "make_id": 278,
         "model_id": 842,
         "usage": "MP",
     },
+    # profile 3
     "interceptor_utility_1_month_cycle": {
         "length": 1,
         "make_id": 409,
         "model_id": 1327,
         "usage": "MP",
     },
+    # profile 4
     "interceptor_utility_3_month_cycle": {
         "length": 3,
         "make_id": 409,
         "model_id": 1327,
         "usage": "MP",
     },
+    # profile 5
     "interceptor_mp_1_month_cycle": {
         "length": 1,
         "make_id": 409,
         "model_id": 1326,
         "usage": "MP",
     },
+    # profile 5
     "interceptor_mp_3_month_cycle": {
         "length": 3,
         "make_id": 409,
@@ -68,24 +74,27 @@ PARAMS = {
         "usage": "MP",
     },
     # These vehicles are used too generally to model accurately
-    # "ford_fiesta_AV_4_month_cycle": { 
+    # "ford_fiesta_AV_4_month_cycle": {
     #     "length": 4,
     #     "make_id": 409,
     #     "model_id": 1129,
     #     "usage": "AV",
     # },
+    # profile 7
     "ford_F250_HP_4_month_cycle": {
         "length": 4,
         "make_id": 409,
         "model_id": 1072,
         "usage": "HP",
     },
+    # profile 8
     "mitsubishi_loadpacker_LC_3_month_cycle": {
         "length": 3,
         "make_id": 580,
         "model_id": 1402,
         "usage": "LC",
     },
+    # profile 9
     "autocar_cobra_tc_3_month_cycle": {
         "length": 3,
         "make_id": 217,

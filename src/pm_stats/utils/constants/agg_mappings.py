@@ -10,13 +10,14 @@ AGG_MAPPING = {
 }
 # Renaming scheme for aggregated work-order data
 AGG_RENAMING = {
+    "acquire_date": "acquire_date",
     "work_order_number_nunique": "work_order_count",
     "done_at_date_min": "first_completion_date",
     "done_at_date_max": "last_completion_date",
     "current_pm_mileage_min": "starting_mileage",
     "current_pm_mileage_max": "ending_mileage",
-    "days_late_mean": "days_late_mean",
-    "days_late_median": "days_late_median",
+    "weeks_late_mean": "weeks_late_mean",
+    "weeks_late_median": "weeks_late_median",
     "miles_driven_sum": "total_miles_driven",
     "miles_driven_mean": "miles_driven_mean",
     "labor_hours_sum": "total_labor_hours",
@@ -35,4 +36,10 @@ VEHICLE_ATTRIBUTES = [
     "make",
     "model",
     "pm_cycle_length",
+]
+# Names of the columns that describe mileage and should be divided by 1000
+MILEAGE_COLS = [
+    "starting_mileage",
+    "total_miles_driven",
+    "miles_driven_mean",
 ]
