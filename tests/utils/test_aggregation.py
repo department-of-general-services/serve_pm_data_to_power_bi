@@ -6,7 +6,11 @@ from pm_stats.utils.aggregations import (
     rename_asset_cols,
 )
 from pm_stats.systems.faster import prepared_wo_table, raw_asset_details_table
-from pm_stats.utils.constants import AGG_MAPPING, VEHICLE_ATTRIBUTES
+from pm_stats.utils.constants import (
+    AGG_MAPPING,
+    AGG_RENAMING,
+    VEHICLE_ATTRIBUTES,
+)
 
 
 class TestAggregateWOsToAssets:
@@ -46,13 +50,10 @@ class TestMergeWithAssetDetails:
         """Tests that the merge_with_asset_details function is a function"""
         assert callable(merge_with_asset_details)
 
-    def test_merge_with_asset_details_gets_correct_columns(self):
+    def test_merge_with_asset_details_gets_correct_columns(self, test_assets: pd.DataFrame):
         """Tests that the merge_with_asset_details function adds the new columns we expect"""
         # setup
-        work_orders = pd.DataFrame.from_dict(prepared_wo_table, orient="index")
-        assets = aggregate_wos_to_assets(
-            work_orders, AGG_MAPPING, VEHICLE_ATTRIBUTES
-        )
+        assets = test_assets
         asset_details = pd.DataFrame.from_dict(
             raw_asset_details_table, orient="index"
         )
@@ -68,3 +69,15 @@ class TestRenameAssetCols:
     def test_rename_asset_cols_is_function(self):
         """Tests that the rename_asset_cols function is a function"""
         assert callable(rename_asset_cols)
+
+    def test_rename_asset_cols_provides_correct_cols(
+        self, test_merged_assets: pd.DataFrame
+    ):
+        """Tests that the rename_asset_cols function outputs
+        a dataframe with the expected columns"""
+        # setup
+        merged = test_merged_assets
+        expected_cols = list(AGG_RENAMING.values()) + VEHICLE_ATTRIBUTES
+        # execution
+        renamed = rename_asset_cols(merged, mapping=AGG_RENAMING)
+        assert sorted(renamed.columns) == sorted(expected_cols)
