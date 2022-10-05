@@ -71,9 +71,9 @@ def replace_values(work_orders: pd.DataFrame) -> pd.DataFrame:
     """
     work_orders = work_orders.copy()
     mapper = {"Y": 1, "N": 0, "": 0}
-    work_orders[["road_call", "accident"]] = work_orders[["road_call", "accident"]].replace(
-        mapper
-    )
+    work_orders[["road_call", "accident"]] = work_orders[
+        ["road_call", "accident"]
+    ].replace(mapper)
     return work_orders
 
 
@@ -106,9 +106,13 @@ def cast_types(work_orders: pd.DataFrame) -> pd.DataFrame:
         pd.DataFrame: Output dataframe
     """
     work_orders = work_orders.copy()
-    work_orders[["is_off_schedule", "is_on_schedule", "accident", "road_call"]] = work_orders[
+    work_orders[
         ["is_off_schedule", "is_on_schedule", "accident", "road_call"]
-    ].astype(bool)
+    ] = work_orders[
+        ["is_off_schedule", "is_on_schedule", "accident", "road_call"]
+    ].astype(
+        bool
+    )
     return work_orders
 
 

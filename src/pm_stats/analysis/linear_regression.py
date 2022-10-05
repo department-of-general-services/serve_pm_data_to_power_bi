@@ -28,7 +28,7 @@ class MultipleRegression:
         self.X = sm.add_constant(self.X)
         estimate = sm.OLS(self.y, self.X).fit()
         rsquared = round(estimate.rsquared, 2)
-        adj_rsquared = round(estimate.rsquared_adj, 2) 
+        adj_rsquared = round(estimate.rsquared_adj, 2)
         print(f"Rsquared: {rsquared}\nAdjusted Rsquared: {adj_rsquared}")
         print("\n")
         print(estimate.params)
